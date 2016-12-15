@@ -4,10 +4,6 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
-    ../../../source/backOffice/messageServer/main.cpp
-
+    ../../../source/frontOffice/messageFromAppTest/main.cpp
 
 unix:!macx: LIBS += -lzmq
-
-HEADERS += \
-    ../../../source/global/message_globals.h
