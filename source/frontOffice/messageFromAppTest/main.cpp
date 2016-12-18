@@ -14,7 +14,7 @@ int main()
     zmq::socket_t socket (context, ZMQ_REQ);
 
     cout << "Connecting to hello world server…" << endl;
-    socket.connect ("tcp://0.0.0.0:5555");
+    socket.connect ("tcp://127.0.0.1:5556");
 
     for (int i = 0; i != 10; i++)
     {

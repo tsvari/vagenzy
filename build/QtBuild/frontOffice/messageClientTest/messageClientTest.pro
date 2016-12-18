@@ -4,6 +4,6 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
-    ../../../source/frontOffice/messageClientTest/main.cpp
+    ../../../../source/frontOffice/messageClientTest/main.cpp
 
 unix:!macx: LIBS += -lzmq
