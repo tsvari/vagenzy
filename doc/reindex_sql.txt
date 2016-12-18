@@ -1,0 +1,17 @@
+SET TERM ^^ ;
+CREATE PROCEDURE REINDEX
+AS
+DECLARE VARIABLE SQL VARCHAR(200);
+BEGIN
+  FOR
+    select RDB$INDEX_NAME
+    from RDB$INDICES
+    INTO
+      :SQL
+  DO
+  BEGIN
+      SQL = 'set statistics index ' || :SQL;
+    EXECUTE STATEMENT :SQL;
+  END
+END ^^
+SET TERM ; ^^
