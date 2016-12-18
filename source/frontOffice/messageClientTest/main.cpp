@@ -15,12 +15,12 @@ int main ()
     zmq::socket_t socket (context, ZMQ_REQ);
 
     std::cout << "Connecting to hello world server…" << std::endl;
-    socket.connect ("tcp://0.0.0.0:5555");
+    socket.connect ("tcp://127.0.0.1:5556");
 
     //  Do 10 requests, waiting each time for a response
     for (int i = 0; i != 10; i++)
     {
-        string strFunction[3] = {"addEmployeeJob", "removeEmployeeFromJob", "removeEmployee"};
+        string strFunction[3] = {"addEmployeeToJob", "removeEmployeeFromJob", "removeEmployee"};
         int indexFunction = 0;
         int nEmployee = 0;
         int nJob = 0;
