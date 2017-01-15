@@ -1,17 +1,24 @@
 #include "messagelib.h"
+#include "../../global/zmq.hpp"
+#include "../global/easylogging++.h"
+INITIALIZE_EASYLOGGINGPP
 
 /* parsing request from any client
 */
 bool parseRequest(string& sRequest, string& sFunctionName, int& nEmployee, int& nJob, int& nCompany);
+long time_diff_mlsec(std::chrono::system_clock::time_point startTime, std::chrono::system_clock::time_point endTime);
 
-int main()
+MessageLib mesl;
+
+void *message_routine (void *arg)
 {
-    //  Prepare our context and socket
-    zmq::context_t context (1);
-    zmq::socket_t socket (context, ZMQ_REP);
-    socket.bind ("tcp://127.0.0.1:5556");
 
-    MessageLib mesl;
+    // get context from 'main' thread
+    zmq::context_t *context = (zmq::context_t *) arg;
+
+    // create REP socket for reply tp client socket
+    zmq::socket_t socket (*context, ZMQ_REP);
+    socket.connect ("inproc://workers");
 
     for(;;)
     {
@@ -20,10 +27,9 @@ int main()
         //  Wait for next request from client
         socket.recv (&request);
 
-
         int nResult = MESS_OK;
         string strRequest = static_cast<char*>(request.data());
-        std::cout << "Received - " << strRequest << std::endl;
+        //std::cout << "Received - " << strRequest << std::endl;
         //==========================================================
         string sFunctionName;
         int nEmployee, nJob, nCompany;
@@ -47,17 +53,39 @@ int main()
         else
         {
             nResult = MESS_ERR_FUNCTION_NAME;
-            cout << "problem with function name " << sFunctionName << endl;
+            LOG(ERROR) << "problem with function name : " << "someone needs to hack this stupid App?";
         }
+
         //==========================================================
-
-        //  temporary waiting
-        sleep(1);
-
-
         string strReply(to_string(nResult));
         zmq_send (socket, strReply.c_str(), strReply.length()+1, 0);
     }
+    return (NULL);
+}
+
+int main()
+{
+    // define log file
+    string logFile = string(LOG_FOLDER) + string("/") + string(PROJECT_NAME) + string(".log");
+    // set name of new log file to "logger" config
+    el::Loggers::reconfigureAllLoggers(el::ConfigurationType::Filename, logFile);
+
+    //  Prepare our context and socket
+    zmq::context_t context (1);
+    zmq::socket_t clients (context, ZMQ_ROUTER);
+    clients.bind ("tcp://127.0.0.1:5556");
+
+    zmq::socket_t workers (context, ZMQ_DEALER);
+    workers.bind ("inproc://workers");
+
+    //  Launch pool of worker threads
+    for (int thread_nbr = 0; thread_nbr < 5; thread_nbr++)
+    {
+        pthread_t worker;
+        pthread_create (&worker, NULL, message_routine, (void *) &context);
+    }
+    //  Connect work threads to client threads via a queue
+    zmq::proxy (clients, workers, NULL);
 
     return 0;
 }
@@ -96,3 +124,13 @@ bool parseRequest(string& sRequest, string& sFunctionName, int& nEmployee, int& 
     return true;
 }
 
+long time_diff_mlsec(std::chrono::system_clock::time_point startTime,
+                    std::chrono::system_clock::time_point endTime)
+{
+    auto duration = startTime.time_since_epoch();
+    auto duration2 = endTime.time_since_epoch();
+
+    return
+    static_cast<long>(std::chrono::duration_cast<std::chrono::milliseconds>(duration2).count() -
+    std::chrono::duration_cast<std::chrono::milliseconds>(duration).count());
+}
