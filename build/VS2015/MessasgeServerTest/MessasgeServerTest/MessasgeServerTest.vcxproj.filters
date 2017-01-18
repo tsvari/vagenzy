@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\MessageServer">
+      <UniqueIdentifier>{b0c90fc8-e99e-4eff-a3a3-07a8d386d463}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\global">
+      <UniqueIdentifier>{239c02bd-8912-4ca3-9206-37630d82b8ec}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\source\backOffice\messageServerTest\addemployeetojobtest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\source\backOffice\messageServerTest\checkjobtest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\source\backOffice\messageServerTest\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\source\backOffice\messageServerTest\removeemployeefromjobtest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\source\backOffice\messageServerTest\removeemployeetest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\source\backOffice\messageServerTest\zparsertest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\source\backOffice\messageServerTest\zrpctest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\source\backOffice\messageServerTest\zvalidatortest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\source\backOffice\messageServer\addemployeetojob.cpp">
+      <Filter>Source Files\MessageServer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\source\backOffice\messageServer\checkjob.cpp">
+      <Filter>Source Files\MessageServer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\source\backOffice\messageServer\removeemployee.cpp">
+      <Filter>Source Files\MessageServer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\source\backOffice\messageServer\removeemployeefromjob.cpp">
+      <Filter>Source Files\MessageServer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\source\backOffice\messageServer\zparser.cpp">
+      <Filter>Source Files\MessageServer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\source\backOffice\messageServer\zrpc.cpp">
+      <Filter>Source Files\MessageServer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\source\backOffice\messageServer\zvalidator.cpp">
+      <Filter>Source Files\MessageServer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\source\backOffice\global\zbase.cpp">
+      <Filter>Source Files\global</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\source\backOffice\messageServerTest\basetestclass.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\source\backOffice\messageServer\addemployeetojob.h">
+      <Filter>Source Files\MessageServer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\source\backOffice\messageServer\checkjob.h">
+      <Filter>Source Files\MessageServer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\source\backOffice\messageServer\removeemployee.h">
+      <Filter>Source Files\MessageServer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\source\backOffice\messageServer\removeemployeefromjob.h">
+      <Filter>Source Files\MessageServer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\source\backOffice\messageServer\zparser.h">
+      <Filter>Source Files\MessageServer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\source\backOffice\messageServer\zrpc.h">
+      <Filter>Source Files\MessageServer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\source\backOffice\messageServer\zvalidator.h">
+      <Filter>Source Files\MessageServer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\source\backOffice\global\data_globals.h">
+      <Filter>Source Files\global</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\source\backOffice\global\zbase.h">
+      <Filter>Source Files\global</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\source\global\message_globals.h">
+      <Filter>Source Files\global</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

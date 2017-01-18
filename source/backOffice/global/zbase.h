@@ -2,6 +2,11 @@
 #define MESSAGEBASE_H
 
 #include <map>
+
+#if defined(_WIN32)
+#define HAVE_STRUCT_TIMESPEC
+#endif
+
 #include <pthread.h>
 
 

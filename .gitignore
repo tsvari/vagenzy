@@ -1,6 +1,7 @@
 #OS junk files
 [Tt]humbs.db
 *.DS_Store
+*.cppcheck
 
 #Visual Studio files
 *.[Oo]bj
@@ -23,3 +24,6 @@
 *.sbr
 *.sdf
 tmp/
+Debug/
+debug/
+.vs/

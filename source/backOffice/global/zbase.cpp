@@ -12,7 +12,7 @@ ZBase::ZBase(messMAP& employeeToJobCompany, bool lock_mode):
     _employeeToJobCompany(employeeToJobCompany),
     _lock_mode(lock_mode)
 {
-
+	_rwlock = PTHREAD_RWLOCK_INITIALIZER;
 }
 
 int ZBase::Dojob(ZData&)
