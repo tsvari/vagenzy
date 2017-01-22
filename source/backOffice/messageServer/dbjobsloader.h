@@ -14,7 +14,7 @@ typedef std::vector<ZData*> zdataArr;
 class DBJobsLoader
 {
 public:
-    DBJobsLoader(IConfigFile* config);
+    explicit DBJobsLoader(IConfigFile* config);
     virtual bool LoadJobsFromDB(zdataArr& /*arr*/);
 
 protected:
@@ -24,7 +24,7 @@ protected:
 class FakeDBJobsLoader : public DBJobsLoader
 {
 public:
-    FakeDBJobsLoader(IConfigFile* config):DBJobsLoader(config){}
+    explicit FakeDBJobsLoader(IConfigFile* config):DBJobsLoader(config){}
     virtual bool LoadJobsFromDB(zdataArr& arr);
 
 };

@@ -1,5 +1,5 @@
 #include "configfile.h"
-#include "../../global/Markup.h"
+//#include "../../global/Markup.h"
 
 ConfigFile::ConfigFile(const char* file):
     _file(file)

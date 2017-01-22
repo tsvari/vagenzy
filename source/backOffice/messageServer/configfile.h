@@ -13,7 +13,7 @@ class IConfigFile
 class ConfigFile : public IConfigFile
 {
 public:
-    ConfigFile(const char* file);
+    explicit ConfigFile(const char* file);
     virtual bool Load();
     virtual bool GetValue(const std::string& param, std::string& out_value);
     virtual std::string GetConnectionString() const;
@@ -25,7 +25,7 @@ private:
 class ConfigFileMock : public ConfigFile
 {
 public:
-    ConfigFileMock(const char* file):ConfigFile(file){}
+    explicit ConfigFileMock(const char* file):ConfigFile(file){}
     MOCK_METHOD0(Load, bool());
 };
 #endif // CONFIGFILE_H
