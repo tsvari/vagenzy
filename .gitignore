@@ -23,6 +23,7 @@
 *.lib
 *.sbr
 *.sdf
+*.VC.db
 tmp/
 Debug/
 debug/

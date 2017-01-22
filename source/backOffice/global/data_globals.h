@@ -19,10 +19,10 @@ struct ZData
         _job(job),
         _company(company){}
     explicit ZData(const ZData* pZdata):
-		_func_name(pZdata->func_name),
-        _employee(pZdata->employee),
-        _job(pZdata->job),
-        _company(pZdata->company){}
+        _func_name(pZdata->_func_name),
+        _employee(pZdata->_employee),
+        _job(pZdata->_job),
+        _company(pZdata->_company){}
 
     std::string _func_name;
     int _employee;
