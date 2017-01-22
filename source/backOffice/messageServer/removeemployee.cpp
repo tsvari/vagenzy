@@ -8,7 +8,7 @@ RemoveEmployee::RemoveEmployee(messMAP& employeeToJobCompany, bool lock_mode):
 
 }
 
-int RemoveEmployee::Dojob(ZData& zdata)
+int RemoveEmployee::Dojob(const ZData& zdata)
 {
     // start read lock
     if(_lock_mode)
@@ -38,11 +38,10 @@ int RemoveEmployee::Dojob(ZData& zdata)
         if(itJobCompany->second == zdata._company)
         {
             std::map<int,int>::iterator itToErase = itJobCompany;
-            ++itJobCompany;
             jobCompanyMap.erase(itToErase);
         }
-        else
-            ++itJobCompany;
+
+        ++itJobCompany;
     }
 
     // if job-company MAP is empty delete employee too

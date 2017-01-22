@@ -18,7 +18,7 @@ CheckJob::CheckJob(messMAP& employeeToJobCompany, bool lock_mode):
 /// \param zdata
 /// \return: count of jobs
 ///
-int CheckJob::Dojob(ZData& zdata)
+int CheckJob::Dojob(const ZData& zdata)
 {
     int nMessageCount = 0;
 

@@ -6,7 +6,7 @@ struct ZData;
 class ZRPC
 {
 public:
-    static int CallProc(ZData& zdata);
+    static int CallProc(const ZData& zdata);
 
 };
 

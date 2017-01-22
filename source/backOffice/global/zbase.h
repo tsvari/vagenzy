@@ -20,7 +20,7 @@ public:
     ZBase(messMAP& employeeToJobCompany, bool lock_mode);
     virtual ~ZBase(){}
 
-    virtual int Dojob(ZData& /*zdata*/);
+    virtual int Dojob(const ZData& /*zdata*/);
 
 protected:
     messMAP& _employeeToJobCompany;

@@ -8,7 +8,7 @@ class AddEmployeeToJob : public ZBase
 public:
     AddEmployeeToJob(messMAP& employeeToJobCompany, bool lock_mode = false);
 
-    virtual int Dojob(ZData& zdata);
+    virtual int Dojob(const ZData& zdata);
 };
 
 #endif // ADDEMPLOYEETOJOB_H

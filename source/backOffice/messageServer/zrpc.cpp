@@ -2,7 +2,7 @@
 #include "zrpc.h"
 #include "../../global/message_globals.h"
 
-int ZRPC::CallProc(ZData &zdata)
+int ZRPC::CallProc(const ZData &zdata)
 {
     std::map<std::string, ZBase*>::iterator it = globalDriverData.find(zdata._func_name);
 

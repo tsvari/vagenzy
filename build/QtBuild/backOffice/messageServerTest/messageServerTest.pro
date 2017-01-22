@@ -3,10 +3,10 @@ CONFIG += console c++11
 CONFIG -= app_bundle
 CONFIG -= qt
 
+DEFINES += MARKUP_STL
+
 SOURCES += \
-    ../../../../source/backOffice/messageServerTest/main.cpp \
     ../../../../source/backOffice/messageServer/zparser.cpp \
-    ../../../../source/backOffice/messageServerTest/zparsertest.cpp \
     ../../../../source/backOffice/messageServer/addemployeetojob.cpp \
     ../../../../source/backOffice/messageServer/removeemployeefromjob.cpp \
     ../../../../source/backOffice/messageServer/removeemployee.cpp \
@@ -14,12 +14,18 @@ SOURCES += \
     ../../../../source/backOffice/messageServer/zvalidator.cpp \
     ../../../../source/backOffice/global/zbase.cpp \
     ../../../../source/backOffice/messageServer/zrpc.cpp \
-    ../../../../source/backOffice/messageServerTest/zvalidatortest.cpp \
-    ../../../../source/backOffice/messageServerTest/zrpctest.cpp \
-    ../../../../source/backOffice/messageServerTest/addemployeetojobtest.cpp \
-    ../../../../source/backOffice/messageServerTest/checkjobtest.cpp \
-    ../../../../source/backOffice/messageServerTest/removeemployeefromjobtest.cpp \
-    ../../../../source/backOffice/messageServerTest/removeemployeetest.cpp
+    ../../../../source/backOffice/messageServer/configfile.cpp \
+    ../../../../source/global/Markup.cpp \
+    ../../../../source/backOffice/messageServer/dbjobsloader.cpp \
+    ../../../../source/backOffice/messageServerTest/addemployeetojob_test.cpp \
+    ../../../../source/backOffice/messageServerTest/checkjob_test.cpp \
+    ../../../../source/backOffice/messageServerTest/removeemployeefromjob_test.cpp \
+    ../../../../source/backOffice/messageServerTest/removeemployee_test.cpp \
+    ../../../../source/backOffice/messageServerTest/zparser_test.cpp \
+    ../../../../source/backOffice/messageServerTest/zrpc_test.cpp \
+    ../../../../source/backOffice/messageServerTest/zvalidator_test.cpp \
+    ../../../../source/backOffice/messageServerTest/main_test.cpp \
+    ../../../../source/backOffice/messageServerTest/db_mock_fake_test.cpp
 
 HEADERS += \
     ../../../../source/backOffice/messageServer/zparser.h \
@@ -33,7 +39,10 @@ HEADERS += \
     ../../../../source/backOffice/global/data_globals.h \
     ../../../../source/global/message_globals.h \
     ../../../../source/backOffice/messageServer/zrpc.h \
-    ../../../../source/backOffice/messageServerTest/basetestclass.hpp
+    ../../../../source/backOffice/messageServerTest/basetestclass.hpp \
+    ../../../../source/backOffice/messageServer/configfile.h \
+    ../../../../source/global/Markup.h \
+    ../../../../source/backOffice/messageServer/dbjobsloader.h
 
 
 unix:!macx: LIBS += -pthread

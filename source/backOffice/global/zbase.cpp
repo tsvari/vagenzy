@@ -15,7 +15,7 @@ ZBase::ZBase(messMAP& employeeToJobCompany, bool lock_mode):
 	_rwlock = PTHREAD_RWLOCK_INITIALIZER;
 }
 
-int ZBase::Dojob(ZData&)
+int ZBase::Dojob(const ZData&)
 {
     return MESS_OK;
 }

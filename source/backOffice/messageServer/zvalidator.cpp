@@ -2,7 +2,7 @@
 #include "zvalidator.h"
 #include "../../global/message_globals.h"
 
-int ZValidator::Validate(ZData &zdate)
+int ZValidator::Validate(const ZData &zdate)
 {
     std::map<std::string, ZBase*>::iterator it = globalDriverData.find(zdate._func_name);
     if(it != globalDriverData.end())

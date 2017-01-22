@@ -1,14 +1,23 @@
-#include "messagelib.h"
+#include "../../global/message_globals.h"
 #include "../../global/zmq.hpp"
-#include "../global/easylogging++.h"
-INITIALIZE_EASYLOGGINGPP
+#include "../global/data_globals.h"
+#include "../messageServer/zparser.h"
+#include "../messageServer/zrpc.h"
+#include "../messageServer/zvalidator.h"
+#include "../messageServer/dbjobsloader.h"
+#include "../messageServer/configfile.h"
+#include "../messageServer/checkjob.h"
+#include "../messageServer/addemployeetojob.h"
+#include "../messageServer/removeemployee.h"
+#include "../messageServer/removeemployeefromjob.h"
 
-/* parsing request from any client
-*/
-bool parseRequest(string& sRequest, string& sFunctionName, int& nEmployee, int& nJob, int& nCompany);
-long time_diff_mlsec(std::chrono::system_clock::time_point startTime, std::chrono::system_clock::time_point endTime);
+#include <string>
 
-MessageLib mesl;
+using std::string;
+using std::to_string;
+
+messMAP employeeToJobCompany;
+std::map<std::string, ZBase*> globalDriverData;
 
 void *message_routine (void *arg)
 {
@@ -24,40 +33,45 @@ void *message_routine (void *arg)
     {
         zmq::message_t request;
 
-        //  Wait for next request from client
+        //  get request from client
         socket.recv (&request);
 
-        int nResult = MESS_OK;
-        string strRequest = static_cast<char*>(request.data());
-        //std::cout << "Received - " << strRequest << std::endl;
-        //==========================================================
-        string sFunctionName;
-        int nEmployee, nJob, nCompany;
+        int nClientResponse = MESS_OK;
+        const char* str_request = static_cast<const char*>(request.data());
 
-        // try to parse request
-        if(!parseRequest(strRequest, sFunctionName, nEmployee, nJob, nCompany))
+        // start proccessing recieved data
+        //--------------------------------
+        ZParser parser;
+        ZData zdata;
+
+        // try to parse client data
+        nClientResponse = parser.Parse(str_request, zdata);
+        if( nClientResponse != MESS_OK )
         {
-            nResult = MESS_ERR_PARSING;
-            cout << "parsing problem " << strRequest << endl;
+            // log error here
+            goto client_response;
         }
 
-        // with parsing is ok, now try to run functions
-        if(sFunctionName == string("addEmployeeToJob"))
-            nResult = mesl.addEmployeeToJob(nEmployee, nJob, nCompany);
-        else if(sFunctionName == string("removeEmployeeFromJob"))
-            nResult = mesl.removeEmployeeFromJob(nEmployee, nJob);
-        else if(sFunctionName == string("removeEmployee"))
-            nResult = mesl.removeEmployee(nEmployee, nCompany);
-        else if(sFunctionName == string("checkJob"))
-            nResult = mesl.checkJob(nEmployee);
-        else
+        // validate client data
+        if(!ZValidator::Validate(zdata))
         {
-            nResult = MESS_ERR_FUNCTION_NAME;
-            LOG(ERROR) << "problem with function name : " << "someone needs to hack this stupid App?";
+            // log error here
+            goto client_response;
+
         }
 
-        //==========================================================
-        string strReply(to_string(nResult));
+        // try to call RPC function
+        nClientResponse = ZRPC::CallProc(zdata);
+        if( nClientResponse != MESS_OK)
+        {
+            // log error here
+            goto client_response;
+        }
+
+        //--------------------------------------
+        // return result to client
+        client_response:
+        string strReply(to_string(nClientResponse));
         zmq_send (socket, strReply.c_str(), strReply.length()+1, 0);
     }
     return (NULL);
@@ -65,10 +79,15 @@ void *message_routine (void *arg)
 
 int main()
 {
+    globalDriverData.insert(std::pair<std::string, ZBase*>("checkJob", new CheckJob(employeeToJobCompany, true)));
+    globalDriverData.insert(std::pair<std::string, ZBase*>("addEmployeeToJob", new AddEmployeeToJob(employeeToJobCompany,true)));
+    globalDriverData.insert(std::pair<std::string, ZBase*>("removeEmployeeFromJob", new RemoveEmployeeFromJob(employeeToJobCompany, true)));
+    globalDriverData.insert(std::pair<std::string, ZBase*>("removeEmployee", new RemoveEmployee(employeeToJobCompany, true)));
+
     // define log file
-    string logFile = string(LOG_FOLDER) + string("/") + string(PROJECT_NAME) + string(".log");
+    //string logFile = string(LOG_FOLDER) + string("/") + string(PROJECT_NAME) + string(".log");
     // set name of new log file to "logger" config
-    el::Loggers::reconfigureAllLoggers(el::ConfigurationType::Filename, logFile);
+    //el::Loggers::reconfigureAllLoggers(el::ConfigurationType::Filename, logFile);
 
     //  Prepare our context and socket
     zmq::context_t context (1);
@@ -87,50 +106,11 @@ int main()
     //  Connect work threads to client threads via a queue
     zmq::proxy (clients, workers, NULL);
 
+    for(auto& ob : globalDriverData)
+    {
+        delete dynamic_cast<ZBase*>(ob.second);
+    }
+
     return 0;
 }
 
-bool parseRequest(string& sRequest, string& sFunctionName, int& nEmployee, int& nJob, int& nCompany)
-{
-    string::size_type foundStart = 0;
-    string::size_type foundEnd = sRequest.find(";");
-
-    // fill fuction name
-    if (foundEnd == std::string::npos)
-        return false;
-    sFunctionName = sRequest.substr(foundStart,foundEnd);
-
-    // fill emploee
-    foundStart = foundEnd + 1;
-    foundEnd = sRequest.find(";", foundStart);
-    if (foundEnd == std::string::npos)
-        return false;
-    nEmployee = atoi(sRequest.substr(foundStart,foundEnd-foundStart).c_str());
-
-    // fill job
-    foundStart = foundEnd + 1;
-    foundEnd = sRequest.find(";", foundStart);
-    if (foundEnd == std::string::npos)
-        return false;
-    nJob = atoi(sRequest.substr(foundStart,foundEnd-foundStart).c_str());
-
-    // fill company
-    foundStart = foundEnd + 1;
-    foundEnd = sRequest.find(";", foundStart);
-    if (foundEnd == std::string::npos)
-        return false;
-    nCompany = atoi(sRequest.substr(foundStart,foundEnd-foundStart).c_str());
-
-    return true;
-}
-
-long time_diff_mlsec(std::chrono::system_clock::time_point startTime,
-                    std::chrono::system_clock::time_point endTime)
-{
-    auto duration = startTime.time_since_epoch();
-    auto duration2 = endTime.time_since_epoch();
-
-    return
-    static_cast<long>(std::chrono::duration_cast<std::chrono::milliseconds>(duration2).count() -
-    std::chrono::duration_cast<std::chrono::milliseconds>(duration).count());
-}

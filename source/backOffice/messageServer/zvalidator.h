@@ -6,7 +6,7 @@ struct ZData;
 class ZValidator
 {
 public:
-    static int Validate(ZData& zdate);
+    static int Validate(const ZData& zdate);
 };
 
 #endif // ZVALIDATOR_H

@@ -8,7 +8,7 @@ class CheckJob : public ZBase
 public:
     CheckJob(messMAP& employeeToJobCompany, bool lock_mode = false);
 
-    virtual int Dojob(ZData& zdata);
+    virtual int Dojob(const ZData& zdata);
 };
 
 #endif // CHECKJOB_H

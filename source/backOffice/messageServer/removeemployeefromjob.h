@@ -8,7 +8,7 @@ class RemoveEmployeeFromJob : public ZBase
 public:
     RemoveEmployeeFromJob(messMAP& employeeToJobCompany, bool lock_mode = false);
 
-    virtual int Dojob(ZData& zdata);
+    virtual int Dojob(const ZData& zdata);
 };
 
 #endif // REMOVEEMPLOYEEFROMJOB_H

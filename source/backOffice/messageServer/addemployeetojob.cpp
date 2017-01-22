@@ -17,7 +17,7 @@ AddEmployeeToJob::AddEmployeeToJob(messMAP& employeeToJobCompany, bool lock_mode
 /// \param zdata
 /// \return
 ///
-int AddEmployeeToJob::Dojob(ZData& zdata)
+int AddEmployeeToJob::Dojob(const ZData& zdata)
 {
     // start read lock
     if(_lock_mode)
@@ -26,7 +26,7 @@ int AddEmployeeToJob::Dojob(ZData& zdata)
     messMAP::iterator itEmployee = _employeeToJobCompany.find( zdata._employee);
 
     if(itEmployee != _employeeToJobCompany.end())
-    {   // employee already exists in list (has anothernot closed job)
+    {   // employee already exists in list (has another not closed job)
         // change from read mode to write mode
         if(_lock_mode)
         {

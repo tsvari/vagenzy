@@ -8,7 +8,7 @@ RemoveEmployeeFromJob::RemoveEmployeeFromJob(messMAP& employeeToJobCompany, bool
 
 }
 
-int RemoveEmployeeFromJob::Dojob(ZData& zdata)
+int RemoveEmployeeFromJob::Dojob(const ZData& zdata)
 {
     // start read lock
     if(_lock_mode)

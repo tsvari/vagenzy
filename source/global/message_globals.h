@@ -10,6 +10,7 @@
 #define MESS_ERR_OVERSIZE           6
 
 #define LOG_FOLDER                  "logs"
+#define CONFIG_FILE                 "messageServer.xml"
 #define MESS_MAX_SIZE               100
 
 #endif // MESSAGE_GLOBAL_H
